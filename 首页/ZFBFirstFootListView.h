@@ -6,8 +6,8 @@
 //  Copyright © 2017年 qyb. All rights reserved.
 //
 
-#import <AsyncDisplayKit/AsyncDisplayKit.h>
+#import <UIKit/UIKit.h>
 
-@interface ZFBFirstFootListView : ASTableNode
-
+@interface ZFBFirstFootListView : UITableView
+@property (strong,nonatomic) NSMutableArray *datas;
 @end

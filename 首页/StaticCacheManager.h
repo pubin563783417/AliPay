@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 @interface StaticCacheManager : NSObject
 + (instancetype)shareManager;
+
+
+- (id)anyObjectForKey:(NSString *)key;
+
+- (void)addObject:(id)object forKey:(NSString *)key;
 /**
  创建一个新的set
  
@@ -16,10 +21,9 @@
  @return set
  */
 - (NSMutableSet *)createNewSetForKey:(nonnull NSString *)key;
-- (NSMutableSet *)setForKey:(NSString *)key;
 
 
-
+- (NSMutableSet *)setForKey:(nonnull NSString *)key;
 /**
  缓存是否存在
 
@@ -27,7 +31,6 @@
  @return yes or no
  */
 - (BOOL)isExistCacheForKey:(NSString *)key;
-
 /**
  同步通过key删除set 引用计数不唯一是不成功
  @param key key

@@ -9,5 +9,5 @@
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 
 @interface ZFBFirstFootNaviBarView : ASDisplayNode
-
+- (void)aboutBarAlpta:(float)alpha;
 @end

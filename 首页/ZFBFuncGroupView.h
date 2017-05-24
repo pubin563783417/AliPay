@@ -6,8 +6,15 @@
 //  Copyright © 2017年 qyb. All rights reserved.
 //
 
-#import <AsyncDisplayKit/AsyncDisplayKit.h>
+#import <UIKit/UIKit.h>
 
-@interface ZFBTopFuncView : ASDisplayNode
-@property (strong,nonatomic) NSMutableArray *items;
+@interface ZFBFuncGroupView : UIView
+- (instancetype)initWithFrame:(CGRect)frame Items:(NSMutableArray *)items tapBlock:(void(^)(NSInteger index, NSString * title))block;
+- (void)reload:(NSArray *)items;
+@end
+@interface ZFBFuncGrouItemModel : NSObject
++ (float)tableHeightForItemCount:(NSInteger)count;
+@property (copy,nonatomic) NSString *title;
+@property (assign,nonatomic) NSInteger index;
+@property (copy,nonatomic) NSString *imageUrl;
 @end

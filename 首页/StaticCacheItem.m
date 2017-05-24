@@ -7,7 +7,7 @@
 //
 
 #import "StaticCacheItem.h"
-#import "AvoidCrash.h"
+//#import "AvoidCrash.h"
 
 @interface StaticCacheItem()
 @property (strong,nonatomic,readwrite) NSMutableSet *set;

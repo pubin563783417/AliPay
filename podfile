@@ -1,0 +1,8 @@
+platform:ios,'7.0'
+target "AliPay" do
+pod 'AFNetworking', '~> 3.1.0'
+pod 'SDWebImage', '~> 3.7.6'
+pod 'CYLTabBarController', '1.10.0'
+pod 'AsyncDisplayKit'
+end
+

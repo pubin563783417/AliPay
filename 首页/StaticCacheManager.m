@@ -8,7 +8,7 @@
 
 #import "StaticCacheManager.h"
 #import "StaticCacheItem.h"
-#import "AvoidCrash.h"
+
 
 static NSString * const methodKey = @"delloc__did__configed";
 @interface StaticCacheManager()
@@ -21,9 +21,11 @@ static NSString * const methodKey = @"delloc__did__configed";
 }
 + (instancetype)shareManager{
     static StaticCacheManager *pb = nil;
-    kDISPATCH_ONCE_BLOCK(^{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         pb = [[StaticCacheManager alloc] init];
     });
+    
     return pb;
 }
 - (instancetype)init{
@@ -48,7 +50,8 @@ static NSString * const methodKey = @"delloc__did__configed";
     }
 }
 - (void)asyncRemoveAll{
-    kDISPATCH_GLOBAL_QUEUE_DEFAULT(^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
         [_keys enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             StaticCacheItem *item = obj;
             @synchronized (item.set) {
@@ -57,6 +60,16 @@ static NSString * const methodKey = @"delloc__did__configed";
             
         }];
     });
+}
+- (id)anyObjectForKey:(NSString *)key{
+    NSMutableSet *set = [self setForKey:key];
+    id object = [set anyObject];
+    [set removeObject:object];
+    return object;
+}
+- (void)addObject:(id)object forKey:(NSString *)key{
+    NSMutableSet *set = [self setForKey:key];
+    [set addObject:object];
 }
 /**
  创建一个新的set
@@ -102,7 +115,8 @@ static NSString * const methodKey = @"delloc__did__configed";
 }
 
 - (void)asyncRemoveSetForKey:(NSString *)key compelet:(void(^)(BOOL succss))compelet{
-    kDISPATCH_GLOBAL_QUEUE_DEFAULT(^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
         StaticCacheItem *item = [_keys objectForKey:key];
         if (!item) {
             if (compelet) {
@@ -124,6 +138,7 @@ static NSString * const methodKey = @"delloc__did__configed";
             }
         }
     });
+    
 }
 
 

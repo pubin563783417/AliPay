@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ZFBFirstFootTopFuncView : UIView
-
+- (instancetype)initWithFrame:(CGRect)frame datas:(NSMutableArray *)datas;
 @end

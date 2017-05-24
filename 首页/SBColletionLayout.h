@@ -9,5 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface SBColletionLayout : NSObject
+@property (strong,nonatomic) NSIndexPath *indexPath;
+@property (assign,nonatomic) CGRect frame;
+@property (assign,nonatomic) CGRect bounds;
+@property (assign,nonatomic) CGPoint center;
+@property (assign,nonatomic) CGSize size;
+@property (assign,nonatomic) float alpha;
+@property (assign,nonatomic) BOOL hidden;
+@property (assign,nonatomic) BOOL opaque;
+
+- (instancetype)clear;
 
 @end

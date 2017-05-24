@@ -16,15 +16,21 @@
 //允许缓存 defaults YES
 @property (assign,nonatomic) BOOL allowCache;
 
+@property (assign,nonatomic) BOOL allowClick;
+
 @property (assign,nonatomic) UIEdgeInsets contentInset;
 
 @property (assign,nonatomic) CGSize itemSize;
 
-@property (assign,nonatomic) NSInteger itemCount;
+
 
 @property (copy,nonatomic) UIView * (^item)(SBCollectionView *cv,NSIndexPath *indexPath);
 @property (copy,nonatomic) UIView * (^reloadItem)(SBCollectionView *cv,UIView *item,NSIndexPath *indexPath);
 @property (weak,nonatomic) id <SBCollectionProtocol> delegate;
 
 - (void)reloadData;
+
+- (void)reloadItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)reloadItemsAtIndexPaths:(NSArray <NSIndexPath*>*)indexPaths;
 @end

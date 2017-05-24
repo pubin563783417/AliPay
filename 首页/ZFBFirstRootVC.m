@@ -18,6 +18,7 @@
 @property (strong,nonatomic) ZFBFuncGroupView *functionGroupView;
 @property (strong,nonatomic) ZFBFirstFootTopFuncView *topFuncView;
 @property (strong,nonatomic) SBCollectionView *collection;
+@property (assign,nonatomic) NSInteger sbcount;
 @end
 
 @implementation ZFBFirstRootVC
@@ -33,12 +34,16 @@
     [self.mainScrollView addSubview:self.functionGroupView];
     [self.mainScrollView addSubview:self.topFuncView];
     
-    SBCollectionView *sb = [[SBCollectionView alloc] init];
-    sb.frame = CGRectMake(0, 350, Screen_Width, 200);
-    sb.itemSize = CGSizeMake(100, 50);
-    [self.mainScrollView addSubview:sb];
-    sb.delegate = self;
-    [sb reloadData];
+    _collection = [[SBCollectionView alloc] init];
+    _collection.contentInset = UIEdgeInsetsMake(0, 50, 0, 50);
+    _collection.frame = CGRectMake(0, 250, Screen_Width, 200);
+    _collection.minHorizontalSpace = 5;
+    _collection.verticalSpace = 5;
+    _collection.itemSize = CGSizeMake(100, 50);
+    [self.mainScrollView addSubview:_collection];
+    _collection.delegate = self;
+    _sbcount = 10;
+    [_collection reloadData];
 }
 
 - (UIScrollView *)mainScrollView{
@@ -59,8 +64,15 @@
 }
 - (ZFBFuncGroupView *)functionGroupView{
     if (_functionGroupView == nil) {
+        __weak typeof(self) weak = self;
         _functionGroupView = [[ZFBFuncGroupView alloc]initWithFrame:CGRectMake(0, 100, Screen_Width, [ZFBFuncGrouItemModel tableHeightForItemCount:[self funcModels].count]) Items:[self funcModels] tapBlock:^(NSInteger index, NSString *title) {
+            if (index == 0) {
+                weak.sbcount = 7;
+            }else{
+                weak.sbcount = 12;
+            }
             
+            [weak.collection reloadData];
         }];
     }
     return _functionGroupView;
@@ -94,15 +106,16 @@
 
 
 - (NSInteger)itemsCountForCollectionView:(SBCollectionView *)cv{
-    return 10;
+    return _sbcount;
 }
 
 - (UIView *)collectionView:(SBCollectionView *)cv itemInitAtIndexPath:(NSIndexPath *)indexPath{
     UILabel *label = [[UILabel alloc] init];
     label.textColor = [UIColor blueColor];
     label.font = [UIFont systemFontOfSize:15];
-    label.backgroundColor = [UIColor whiteColor];
+//    label.backgroundColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor blackColor];
     return label;
 }
 

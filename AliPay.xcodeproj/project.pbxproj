@@ -60,6 +60,7 @@
 		170F3C1E1EB32A91003B7288 /* UIView+WT.m in Sources */ = {isa = PBXBuildFile; fileRef = 170F3C1D1EB32A91003B7288 /* UIView+WT.m */; };
 		170F3C211EB39AFD003B7288 /* ZFBFuncGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 170F3C201EB39AFD003B7288 /* ZFBFuncGroupView.m */; };
 		1734591B1ED3D1DE0071CB0B /* SBColletionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1734591A1ED3D1DE0071CB0B /* SBColletionLayout.m */; };
+		1734591E1ED572A90071CB0B /* UIView+SBCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1734591D1ED572A90071CB0B /* UIView+SBCollectionCell.m */; };
 		17833AB31EC594B700842F7E /* SBCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17833AB21EC594B700842F7E /* SBCollectionView.m */; };
 		17833AB81EC594E700842F7E /* StaticCacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 17833AB51EC594E700842F7E /* StaticCacheItem.m */; };
 		17833AB91EC594E700842F7E /* StaticCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17833AB71EC594E700842F7E /* StaticCacheManager.m */; };
@@ -173,6 +174,8 @@
 		170F3C201EB39AFD003B7288 /* ZFBFuncGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFBFuncGroupView.m; sourceTree = "<group>"; };
 		173459191ED3D1DE0071CB0B /* SBColletionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBColletionLayout.h; sourceTree = "<group>"; };
 		1734591A1ED3D1DE0071CB0B /* SBColletionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBColletionLayout.m; sourceTree = "<group>"; };
+		1734591C1ED572A90071CB0B /* UIView+SBCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SBCollectionCell.h"; sourceTree = "<group>"; };
+		1734591D1ED572A90071CB0B /* UIView+SBCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SBCollectionCell.m"; sourceTree = "<group>"; };
 		17833AB11EC594B700842F7E /* SBCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBCollectionView.h; sourceTree = "<group>"; };
 		17833AB21EC594B700842F7E /* SBCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBCollectionView.m; sourceTree = "<group>"; };
 		17833AB41EC594E700842F7E /* StaticCacheItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticCacheItem.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				179335241EB984B500C6D0F7 /* ZFBFirstFootListCell.m */,
 				17833AB11EC594B700842F7E /* SBCollectionView.h */,
 				17833AB21EC594B700842F7E /* SBCollectionView.m */,
+				1734591C1ED572A90071CB0B /* UIView+SBCollectionCell.h */,
+				1734591D1ED572A90071CB0B /* UIView+SBCollectionCell.m */,
 				173459191ED3D1DE0071CB0B /* SBColletionLayout.h */,
 				1734591A1ED3D1DE0071CB0B /* SBColletionLayout.m */,
 				17833ABA1EC5981C00842F7E /* SBCollectionProtocol.h */,
@@ -682,6 +687,7 @@
 				17833AB81EC594E700842F7E /* StaticCacheItem.m in Sources */,
 				170F3BC31EB2F721003B7288 /* ZFBGoodPriceVC.m in Sources */,
 				170F3BC61EB31921003B7288 /* ZFBFirstFootNaviBarView.m in Sources */,
+				1734591E1ED572A90071CB0B /* UIView+SBCollectionCell.m in Sources */,
 				170F3BB71EB2F0E8003B7288 /* ZFBFirstRootVC.m in Sources */,
 				170F3B7F1EB2D0BE003B7288 /* main.m in Sources */,
 				170F3C1E1EB32A91003B7288 /* UIView+WT.m in Sources */,

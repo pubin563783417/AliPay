@@ -222,7 +222,7 @@
         }
         ZFBFuncGrouItemModel *model = _items[index];
 //        NSString *tilte =
-        _block(model.index,model.title);
+        _block(index,model.title);
     }
     
 }

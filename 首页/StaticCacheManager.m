@@ -54,50 +54,58 @@ static NSString * const methodKey = @"delloc__did__configed";
     dispatch_async(queue, ^{
         [_keys enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             StaticCacheItem *item = obj;
-            @synchronized (item.set) {
+            @synchronized (item) {
                 [item  removeAllObject];
             }
             
         }];
     });
 }
+
+
 - (id)anyObjectForKey:(NSString *)key{
-    NSMutableSet *set = [self setForKey:key];
-    id object = [set anyObject];
-    [set removeObject:object];
+    StaticCacheItem *item = [self itemForKey:key];
+    id object = [item anyObject];
+    if (!object) {
+        return nil;
+    }
+    [item removeObject:object];
     return object;
 }
 - (void)addObject:(id)object forKey:(NSString *)key{
-    NSMutableSet *set = [self setForKey:key];
-    [set addObject:object];
+    StaticCacheItem *item = [self itemForKey:key];
+    [item.set addObject:object];
 }
+
+
 /**
  创建一个新的set
 
  @param key key
  @return 返回nil为重复创建
  */
-- (NSMutableSet *)createNewSetForKey:(nonnull NSString *)key{
+- (StaticCacheItem *)createItemForKey:(nonnull NSString *)key{
     
     StaticCacheItem *item = [_keys objectForKey:key];
-    NSMutableSet *set = nil;
     if (!item) {
         item = [[StaticCacheItem alloc]init];
         [_keys setObject:item forKey:key];
     }
-    set = item.set;
-    return set;
+    return item;
 }
 
-- (BOOL)isExistCacheForKey:(NSString *)key{
-    id obj = [_keys objectForKey:key];
-    return obj?YES:NO;
-}
-- (NSMutableSet *)setForKey:(NSString *)key{
+- (StaticCacheItem *)itemForKey:(NSString *)key{
     return [_keys objectForKey:key];
 }
 
-- (BOOL)removeSetForKey:(NSString *)key{
+
+- (BOOL)isExistCacheForKey:(NSString *)key{
+    id obj = [_keys objectForKey:key];
+    return [obj boolValue];
+}
+
+
+- (BOOL)removeItemForKey:(NSString *)key{
     StaticCacheItem *item = [_keys objectForKey:key];
     if (!item) {
         return NO;
@@ -114,7 +122,7 @@ static NSString * const methodKey = @"delloc__did__configed";
     
 }
 
-- (void)asyncRemoveSetForKey:(NSString *)key compelet:(void(^)(BOOL succss))compelet{
+- (void)asyncRemoveItemForKey:(NSString *)key compelet:(void(^)(BOOL succss))compelet{
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         StaticCacheItem *item = [_keys objectForKey:key];
@@ -127,7 +135,7 @@ static NSString * const methodKey = @"delloc__did__configed";
         NSInteger retainCount = [[item valueForKey:@"retainCount"] integerValue];
         if (retainCount <= 2) {
             [_keys removeObjectForKey:key];
-            @synchronized (item.set) {
+            @synchronized (item) {
                 [item removeAllObject];
             }
             item = nil;

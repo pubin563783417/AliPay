@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
+@class StaticCacheItem;
 @interface StaticCacheManager : NSObject
 + (instancetype)shareManager;
 
@@ -14,16 +16,15 @@
 - (id)anyObjectForKey:(NSString *)key;
 
 - (void)addObject:(id)object forKey:(NSString *)key;
+
+
 /**
  创建一个新的set
  
  @param key key
- @return set
+ @return 返回nil为重复创建
  */
-- (NSMutableSet *)createNewSetForKey:(nonnull NSString *)key;
-
-
-- (NSMutableSet *)setForKey:(nonnull NSString *)key;
+- (StaticCacheItem *)createItemForKey:(nonnull NSString *)key;
 /**
  缓存是否存在
 
@@ -35,7 +36,7 @@
  同步通过key删除set 引用计数不唯一是不成功
  @param key key
  */
-- (BOOL)removeSetForKey:(NSString *)key;
+- (BOOL)removeItemForKey:(NSString *)key;
 
 /**
  异步清除set
@@ -43,7 +44,7 @@
  @param key key
  @param compelet 回调
  */
-- (void)asyncRemoveSetForKey:(NSString *)key compelet:(void(^)(BOOL succss))compelet;
+- (void)asyncRemoveItemForKey:(NSString *)key compelet:(void(^)(BOOL succss))compelet;
 /**
  If `YES`, the cache will remove all objects when the app receives a memory warning.
  The default value is `YES`.

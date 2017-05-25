@@ -63,16 +63,19 @@
     return _topFuncView;
 }
 - (ZFBFuncGroupView *)functionGroupView{
+    
     if (_functionGroupView == nil) {
         __weak typeof(self) weak = self;
         _functionGroupView = [[ZFBFuncGroupView alloc]initWithFrame:CGRectMake(0, 100, Screen_Width, [ZFBFuncGrouItemModel tableHeightForItemCount:[self funcModels].count]) Items:[self funcModels] tapBlock:^(NSInteger index, NSString *title) {
             if (index == 0) {
-                weak.sbcount = 7;
+                [weak.collection deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:3 inSection:0],[NSIndexPath indexPathForRow:4 inSection:0]] animated:YES completion:nil];
+//                [weak.collection deleteItemAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES completion:nil];
             }else{
                 weak.sbcount = 12;
+                [weak.collection reloadData];
             }
             
-            [weak.collection reloadData];
+            
         }];
     }
     return _functionGroupView;

@@ -33,4 +33,8 @@
 - (void)reloadItemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)reloadItemsAtIndexPaths:(NSArray <NSIndexPath*>*)indexPaths;
+
+- (void)deleteItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL) animated completion:(void(^)(BOOL finished))completion;
+
+- (void)deleteItemsAtIndexPaths:(NSArray <NSIndexPath *>*)indexPaths animated:(BOOL) animated completion:(void(^)(BOOL finished))completion;
 @end

@@ -106,11 +106,59 @@ static float screen_width_ratio(float ratio){
     }
 }
 
-- (void)addItemsAtLast{
-    [self sb_reloadForCycleWithFrom:self.itemCount to:self.itemCount+1];
-}
 - (void)deleteItemAtIndexPath:(NSIndexPath *)indexPath{
-    [self sb_reloadContentForCycleWithFrom:indexPath.row+1 to:self.itemCount];
+    [self deleteItemsAtIndexPaths:@[indexPath]];
+}
+- (void)deleteItemsAtIndexPaths:(NSArray <NSIndexPath *>*)indexPaths{
+    NSInteger index = [indexPaths firstObject].row+indexPaths.count;
+    for (NSIndexPath *indexPath in indexPaths) {
+        UIView *delItem = [self viewWithTag:[self tagWithIndexPath:indexPath]];
+        if (!delItem) {
+            return;
+        }
+        [delItem removeFromSuperview];
+    }
+    while (index<_beforeCount) {
+        UIView *item = [self viewWithTag:[self tagWithIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
+        NSAssert(item,@"item of indexpath not exist");
+        [self moveItem:item forUnits:-indexPaths.count];
+        index++;
+    }
+    _beforeCount = _beforeCount-indexPaths.count;
+}
+- (void)deleteItemsAtIndexPaths:(NSArray <NSIndexPath *>*)indexPaths animated:(BOOL) animated completion:(void(^)(BOOL finished))completion{
+    NSTimeInterval duration = 0.0f;
+    if (animated) {
+        duration = 0.3f;
+    }
+    [UIView animateWithDuration:duration animations:^{
+        [self deleteItemsAtIndexPaths:indexPaths];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    }];
+}
+- (void)deleteItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL) animated completion:(void(^)(BOOL finished))completion{
+    NSTimeInterval duration = 0.0f;
+    if (animated) {
+        duration = 0.3f;
+    }
+    [UIView animateWithDuration:duration animations:^{
+        [self deleteItemAtIndexPath:indexPath];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    }];
+}
+- (void)moveItem:(UIView *)item forUnits:(NSInteger)units{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:item.indexPath.row+units inSection:0];
+    if (indexPath.row<0 || indexPath.row>self.itemCount-1) {
+        return;
+    }
+    SBColletionLayout *layout = [self nomalLayoutWithIndex:indexPath];
+    [self drawItem:item layout:layout];
 }
 - (void)reloadItem:(UIView *)item atIndexPath:(NSIndexPath *)indexPath{
     [self reloadLayoutWithItem:item atIndexPath:indexPath];
@@ -144,6 +192,7 @@ static float screen_width_ratio(float ratio){
         [self drawItem:item layout:[self nomalLayoutWithIndex:indexPath]];
     }
 }
+
 
 - (SBColletionLayout *)nomalLayoutWithIndex:(NSIndexPath*)indexPath{
     SBColletionLayout *layout = [self layout:indexPath];

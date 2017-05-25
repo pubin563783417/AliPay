@@ -41,6 +41,26 @@ static float screen_width_ratio(float ratio){
     float screenwidth = [UIScreen mainScreen].bounds.size.width;
     return screenwidth*ratio;
 }
+
+- (instancetype)initWithFrame:(CGRect)frame itemCount:(NSInteger)itemCount itemSize:(CGSize)itemSize item:(Item)item reloadItem:(ReloadItem)reloadItem didSelectItem:(DidSelectItem)didSelectItem{
+    if (self = [self init]) {
+        self.frame = frame;
+        _itemSize = itemSize;
+        _itemCount = itemCount;
+        _item = item;
+        _reloadItem = reloadItem;
+        _didSelectItem = didSelectItem;
+    }
+    return self;
+}
+- (instancetype)initWithFrame:(CGRect)frame itemSize:(CGSize)itemSize delegate:(id <SBCollectionProtocol>)delegate{
+    if (self = [self init]) {
+        self.frame = frame;
+        _itemSize = itemSize;
+        _delegate = delegate;
+    }
+    return self;
+}
 - (instancetype)init{
     if (self = [super init]) {
         _allowCache = YES;
@@ -52,6 +72,7 @@ static float screen_width_ratio(float ratio){
         _itemCount = 0;
         _beforeCount = 0;
         _allowClick = YES;
+        self.layer.masksToBounds = YES;
     }
     return self;
 }
@@ -111,21 +132,26 @@ static float screen_width_ratio(float ratio){
 }
 - (void)deleteItemsAtIndexPaths:(NSArray <NSIndexPath *>*)indexPaths{
     NSInteger index = [indexPaths firstObject].row+indexPaths.count;
+     NSInteger deleteCount = 0;
     for (NSIndexPath *indexPath in indexPaths) {
         UIView *delItem = [self viewWithTag:[self tagWithIndexPath:indexPath]];
         if (!delItem) {
-            return;
+            break;
         }
         [delItem removeFromSuperview];
+        deleteCount ++;
     }
+   
     while (index<_beforeCount) {
         UIView *item = [self viewWithTag:[self tagWithIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
         NSAssert(item,@"item of indexpath not exist");
         [self moveItem:item forUnits:-indexPaths.count];
         index++;
+        
     }
-    _beforeCount = _beforeCount-indexPaths.count;
+    _beforeCount = _beforeCount-deleteCount;
 }
+
 - (void)deleteItemsAtIndexPaths:(NSArray <NSIndexPath *>*)indexPaths animated:(BOOL) animated completion:(void(^)(BOOL finished))completion{
     NSTimeInterval duration = 0.0f;
     if (animated) {
@@ -152,9 +178,40 @@ static float screen_width_ratio(float ratio){
         }
     }];
 }
+- (void)insertItemsOfCount:(NSInteger)count AtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = indexPath.row;
+    while (index<_beforeCount) {
+        UIView *item = [self viewWithTag:[self tagWithIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
+        NSAssert(item,@"item of indexpath not exist");
+        [self moveItem:item forUnits:count];
+        index++;
+    }
+    
+    index = indexPath.row;
+    while (index < indexPath.row+count) {
+        NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self reloadLayoutWithItem:[self newItem:insertIndexPath] atIndexPath:insertIndexPath];
+        index++;
+    }
+    _beforeCount = _beforeCount+count;
+}
+- (void)insertItemsOfCount:(NSInteger)count AtIndexPath:(NSIndexPath *)indexPath animated:(BOOL) animated completion:(void(^)(BOOL finished))completion{
+    NSTimeInterval duration = 0.0f;
+    if (animated) {
+        duration = 0.3f;
+    }
+    [UIView animateWithDuration:duration animations:^{
+        [self insertItemsOfCount:count AtIndexPath:indexPath];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+    }];
+}
 - (void)moveItem:(UIView *)item forUnits:(NSInteger)units{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:item.indexPath.row+units inSection:0];
-    if (indexPath.row<0 || indexPath.row>self.itemCount-1) {
+    NSLog(@"indexPath.row:  %d",indexPath.row);
+    if (indexPath.row<0 || indexPath.row>_beforeCount+units-1) {
         return;
     }
     SBColletionLayout *layout = [self nomalLayoutWithIndex:indexPath];
@@ -272,7 +329,7 @@ static float screen_width_ratio(float ratio){
     if (!item) {
         item = [self newItem:indexPath];
     }
-    [self addSubview:item];
+//    [self addSubview:item];
     return item;
 }
 
@@ -283,12 +340,24 @@ static float screen_width_ratio(float ratio){
     item.frame = layout.frame;
     item.bounds = layout.bounds;
     item.indexPath = layout.indexPath;
+    __weak typeof(self) weak = self;
+    item.clickItem = ^(NSIndexPath *indexPath){
+        [weak clickItemSelectorWithIndexPath:indexPath];
+    };
+    [item setUserInteractionEnabledForAllowClick:_allowClick];
     item.tag = [self tagWithIndexPath:layout.indexPath];
     item.alpha = layout.alpha;
     item.hidden = layout.hidden;
     item.opaque = layout.opaque;
+    [self addSubview:item];
 }
-
+- (void)clickItemSelectorWithIndexPath:(NSIndexPath *)indexPath{
+    if ([self.delegate respondsToSelector:@selector(collectionView:didSelectItemAtIndexPath:)]) {
+        [self.delegate collectionView:self didSelectItemAtIndexPath:indexPath];
+    }else if (self.didSelectItem){
+        self.didSelectItem(self,indexPath);
+    }
+}
 - (void)addSubview:(UIView *)view{
     [super addSubview:view];
 }
@@ -296,7 +365,5 @@ static float screen_width_ratio(float ratio){
     [super willRemoveSubview:subview];
     [_cacheManager addObject:subview forKey:__cachekey];
 }
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    
-}
+
 @end

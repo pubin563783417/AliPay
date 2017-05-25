@@ -34,15 +34,38 @@
     [self.mainScrollView addSubview:self.functionGroupView];
     [self.mainScrollView addSubview:self.topFuncView];
     
-    _collection = [[SBCollectionView alloc] init];
+    _collection = [[SBCollectionView alloc] initWithFrame:CGRectMake(0, 250, Screen_Width, 200) itemCount:10 itemSize:CGSizeMake(100, 50) item:^UIView *(SBCollectionView *cv, NSIndexPath *indexPath) {
+        UILabel *label = [[UILabel alloc] init];
+        label.textColor = [UIColor blueColor];
+        label.font = [UIFont systemFontOfSize:15];
+        //    label.backgroundColor = [UIColor whiteColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.backgroundColor = [UIColor blackColor];
+        return label;
+    } reloadItem:^UIView *(SBCollectionView *cv, UIView *item, NSIndexPath *indexPath) {
+        int i = indexPath.row%3;
+        UILabel *label = item;
+        switch (i) {
+            case 0:
+                label.text = @"hello";
+                break;
+            case 1:
+                label.text = @"world";
+                break;
+            case 2:
+                label.text = @"!";
+                break;
+            default:
+                break;
+        }
+        return label;
+    } didSelectItem:^(SBCollectionView *cv, NSIndexPath *indexPath) {
+        NSLog(@"%@",indexPath);
+    }];
     _collection.contentInset = UIEdgeInsetsMake(0, 50, 0, 50);
-    _collection.frame = CGRectMake(0, 250, Screen_Width, 200);
     _collection.minHorizontalSpace = 5;
     _collection.verticalSpace = 5;
-    _collection.itemSize = CGSizeMake(100, 50);
     [self.mainScrollView addSubview:_collection];
-    _collection.delegate = self;
-    _sbcount = 10;
     [_collection reloadData];
 }
 
@@ -71,8 +94,8 @@
                 [weak.collection deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:3 inSection:0],[NSIndexPath indexPathForRow:4 inSection:0]] animated:YES completion:nil];
 //                [weak.collection deleteItemAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES completion:nil];
             }else{
-                weak.sbcount = 12;
-                [weak.collection reloadData];
+                [weak.collection insertItemsOfCount:3 AtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] animated:YES completion:nil];
+//                [weak.collection reloadData];
             }
             
             
@@ -107,39 +130,6 @@
 }
 
 
-
-- (NSInteger)itemsCountForCollectionView:(SBCollectionView *)cv{
-    return _sbcount;
-}
-
-- (UIView *)collectionView:(SBCollectionView *)cv itemInitAtIndexPath:(NSIndexPath *)indexPath{
-    UILabel *label = [[UILabel alloc] init];
-    label.textColor = [UIColor blueColor];
-    label.font = [UIFont systemFontOfSize:15];
-//    label.backgroundColor = [UIColor whiteColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor blackColor];
-    return label;
-}
-
-- (UIView *)collectionView:(SBCollectionView *)cv drawedObject:(UIView *)object indexPath:(NSIndexPath *)indexPath{
-    int i = indexPath.row%3;
-    UILabel *label = object;
-    switch (i) {
-        case 0:
-            label.text = @"hello";
-            break;
-        case 1:
-            label.text = @"world";
-            break;
-        case 2:
-            label.text = @"!";
-            break;
-        default:
-            break;
-    }
-    return object;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

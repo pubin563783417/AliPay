@@ -41,7 +41,21 @@
 
 @optional
 
+/**
+ 点击事件
+
+ @param cv SBCollectionView
+ @param indexPath indexPath
+ */
 - (void)collectionView:(SBCollectionView *)cv didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
+/**
+ 自定义item的layout 布局
+
+ @param cv SBCollectionView
+ @param layout 需要自定义的layout
+ @param indexPath indexPath
+ @return 自定义完成的layout
+ */
 - (SBColletionLayout *)layoutsForCollectionView:(SBCollectionView *)cv layout:(SBColletionLayout *)layout indexPath:(NSIndexPath *)indexPath;
 @end

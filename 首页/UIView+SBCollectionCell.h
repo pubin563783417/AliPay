@@ -10,4 +10,6 @@
 
 @interface UIView (SBCollectionCell)
 @property (strong,nonatomic) NSIndexPath *indexPath;
+@property (copy,nonatomic) void (^clickItem)(NSIndexPath *indexPath);
+- (void)setUserInteractionEnabledForAllowClick:(BOOL)allowClick;
 @end

@@ -40,7 +40,7 @@
         label.font = [UIFont systemFontOfSize:15];
         //    label.backgroundColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor whiteColor];
         return label;
     } reloadItem:^UIView *(SBCollectionView *cv, UIView *item, NSIndexPath *indexPath) {
         int i = indexPath.row%3;
@@ -63,6 +63,8 @@
         NSLog(@"%@",indexPath);
     }];
     _collection.contentInset = UIEdgeInsetsMake(0, 50, 0, 50);
+//    _collection.allowClick = NO;
+//    _collection.selectHighLight = NO;
     _collection.minHorizontalSpace = 5;
     _collection.verticalSpace = 5;
     [self.mainScrollView addSubview:_collection];

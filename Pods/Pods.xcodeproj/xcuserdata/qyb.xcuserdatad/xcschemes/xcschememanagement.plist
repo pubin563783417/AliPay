@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SBSimpleRouter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C1D89EAE68EF4D4ABEDB611EC44AAB0</key>
+		<key>169844F3E7BF49EC10F7B0E46DD292FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>74D11A70526526292A76287BC7F625E6</key>
+		<key>16A746ABACD11C8A571E57564D7A9E6D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>928353533005A4198EBDA5B700D37B64</key>
+		<key>688B33B13AECBA1AEE4CB22FCE83C378</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BE0B1AE3F04CC48CE7B5D9D50D25DE7F</key>
+		<key>7F80D8539C508105C48AF62E35B629CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CAD97667EB773C096EC8C19073BB4F2F</key>
+		<key>9E033EDB5EC0819481B0546434FA577B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E5A0096FD438479C64C89FB3EB8BBBC5</key>
+		<key>CEC40E32D7BC83150D80FBA769D0287E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F04B2771963F56C4A8406B828ED11508</key>
+		<key>D1763904C4BF01DD264942E1D14D3F01</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E66DFE08CA087645B2763AF20D9D1F34</key>
 		<dict>
 			<key>primary</key>
 			<true/>

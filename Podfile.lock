@@ -34,6 +34,7 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0-beta.7):
     - PINCache (= 3.0.1-beta.2)
     - PINRemoteImage/Core
+  - SBSimpleRouter (1.0.1)
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - AsyncDisplayKit
   - CYLTabBarController (= 1.10.0)
+  - SBSimpleRouter (~> 1.0.1)
   - SDWebImage (~> 3.7.6)
 
 SPEC CHECKSUMS:
@@ -50,8 +52,9 @@ SPEC CHECKSUMS:
   CYLTabBarController: 2de9a4c26f50d33574398becf8e7b0aaed794240
   PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
   PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
+  SBSimpleRouter: da29ad7ccefb0c87b9a192ce83bff086121aea98
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
 
-PODFILE CHECKSUM: 9b12c923a907f5c6de694468073d00a6f8807ab4
+PODFILE CHECKSUM: f55d5436584aed64ec4f0c3f729a79f8791d49c1
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.3.0.beta.1

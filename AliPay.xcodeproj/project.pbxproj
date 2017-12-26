@@ -446,12 +446,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 170F3BA71EB2D0BE003B7288 /* Build configuration list for PBXNativeTarget "AliPay" */;
 			buildPhases = (
-				614EA25EE4186DE251E7C9A2 /* 📦 Check Pods Manifest.lock */,
+				614EA25EE4186DE251E7C9A2 /* [CP] Check Pods Manifest.lock */,
 				170F3B761EB2D0BD003B7288 /* Sources */,
 				170F3B771EB2D0BD003B7288 /* Frameworks */,
 				170F3B781EB2D0BD003B7288 /* Resources */,
-				7C21B61434BAF8B2A82968DB /* 📦 Embed Pods Frameworks */,
-				E3F4586DB76B56D51389561A /* 📦 Copy Pods Resources */,
+				7C21B61434BAF8B2A82968DB /* [CP] Embed Pods Frameworks */,
+				E3F4586DB76B56D51389561A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -624,29 +624,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		614EA25EE4186DE251E7C9A2 /* 📦 Check Pods Manifest.lock */ = {
+		614EA25EE4186DE251E7C9A2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		7C21B61434BAF8B2A82968DB /* 📦 Embed Pods Frameworks */ = {
+		7C21B61434BAF8B2A82968DB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,14 +654,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AliPay/Pods-AliPay-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3F4586DB76B56D51389561A /* 📦 Copy Pods Resources */ = {
+		E3F4586DB76B56D51389561A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

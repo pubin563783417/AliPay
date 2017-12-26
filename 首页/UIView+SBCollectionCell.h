@@ -11,5 +11,8 @@
 @interface UIView (SBCollectionCell)
 @property (strong,nonatomic) NSIndexPath *indexPath;
 @property (copy,nonatomic) void (^clickItem)(NSIndexPath *indexPath);
-- (void)setUserInteractionEnabledForAllowClick:(BOOL)allowClick;
+@property (strong,nonatomic) CALayer *highLightLayer;
+@property (copy,nonatomic) BOOL (^allowClick)();
+@property (copy,nonatomic) BOOL (^highLight)();
+@property (assign,nonatomic) BOOL effective;
 @end

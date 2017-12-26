@@ -72,6 +72,7 @@ static float screen_width_ratio(float ratio){
         _itemCount = 0;
         _beforeCount = 0;
         _allowClick = YES;
+        _selectHighLight = YES;
         self.layer.masksToBounds = YES;
     }
     return self;
@@ -315,6 +316,19 @@ static float screen_width_ratio(float ratio){
     }else if(self.item){
         item = _item(self,indexPath);
     }
+    __weak typeof(self) weak = self;
+    item.clickItem = ^(NSIndexPath *indexPath){
+        [weak clickItemSelectorWithIndexPath:indexPath];
+    };
+    if (!item.userInteractionEnabled) {
+        item.userInteractionEnabled = YES;
+    }
+    item.allowClick = ^{
+        return _allowClick;
+    };
+    item.highLight = ^{
+        return _selectHighLight;
+    };
     NSAssert(item, @"item initialize invalid");
     return item;
 }
@@ -340,11 +354,6 @@ static float screen_width_ratio(float ratio){
     item.frame = layout.frame;
     item.bounds = layout.bounds;
     item.indexPath = layout.indexPath;
-    __weak typeof(self) weak = self;
-    item.clickItem = ^(NSIndexPath *indexPath){
-        [weak clickItemSelectorWithIndexPath:indexPath];
-    };
-    [item setUserInteractionEnabledForAllowClick:_allowClick];
     item.tag = [self tagWithIndexPath:layout.indexPath];
     item.alpha = layout.alpha;
     item.hidden = layout.hidden;

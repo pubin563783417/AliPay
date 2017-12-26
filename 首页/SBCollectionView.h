@@ -25,6 +25,8 @@ typedef void (^DidSelectItem)(SBCollectionView *cv,NSIndexPath *indexPath);
 @property (assign,nonatomic) BOOL allowCache;
 //允许点击
 @property (assign,nonatomic) BOOL allowClick;
+//点高亮
+@property (assign,nonatomic) BOOL selectHighLight;
 //内容 的 contentInset 参考scrollview
 @property (assign,nonatomic) UIEdgeInsets contentInset;
 //设置itemSize的大小 在实现了 layoutsForCollectionView:indexPath: 代理后此itemSize将不会使用
